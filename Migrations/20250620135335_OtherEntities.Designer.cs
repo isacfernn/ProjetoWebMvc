@@ -9,8 +9,8 @@ using SalesWebMvc.Model;
 namespace SalesWebMvc.Migrations
 {
     [DbContext(typeof(SalesWebMvcContext))]
-    [Migration("20250617132144_Initial")]
-    partial class Initial
+    [Migration("20250620135335_OtherEntities")]
+    partial class OtherEntities
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -40,7 +40,7 @@ namespace SalesWebMvc.Migrations
 
                     b.Property<DateTime>("Date");
 
-                    b.Property<int?>("SellerId");
+                    b.Property<int>("SellerId");
 
                     b.Property<int>("Status");
 
@@ -48,7 +48,7 @@ namespace SalesWebMvc.Migrations
 
                     b.HasIndex("SellerId");
 
-                    b.ToTable("SalesRecords");
+                    b.ToTable("SalesRecord");
                 });
 
             modelBuilder.Entity("SalesWebMvc.Models.Seller", b =>
@@ -70,14 +70,15 @@ namespace SalesWebMvc.Migrations
 
                     b.HasIndex("DepartmentId");
 
-                    b.ToTable("Sellers");
+                    b.ToTable("Seller");
                 });
 
             modelBuilder.Entity("SalesWebMvc.Models.SalesRecord", b =>
                 {
                     b.HasOne("SalesWebMvc.Models.Seller", "Seller")
                         .WithMany("Sales")
-                        .HasForeignKey("SellerId");
+                        .HasForeignKey("SellerId")
+                        .OnDelete(DeleteBehavior.Cascade);
                 });
 
             modelBuilder.Entity("SalesWebMvc.Models.Seller", b =>
